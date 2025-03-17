@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Projects - My Portfolio{% endblock %}
+
+{% block content %}
+    <!-- Projects Section -->
+    <section class="container mx-auto mt-16 px-6">
+        <h2 class="text-4xl font-bold text-gray-800 text-center">My Projects</h2>
+        <p class="text-center text-gray-600 mt-2">Here are some of the projects I've worked on.</p>
+
+        <div class="mt-12 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {% for project in projects %}
+                <div class="bg-white shadow-lg rounded-lg overflow-hidden transition-transform transform hover:scale-105 duration-300">
+                    <!-- Image Section -->
+                    {% if project.image %}
+                        <img src="{{ project.image.url }}" alt="{{ project.title }}" class="w-full h-56 object-cover">
+                    {% else %}
+                        <img src="{% static 'images/default_project.jpg' %}" alt="Default Image" class="w-full h-56 object-cover">
+                    {% endif %}
+
+                    <!-- Project Details -->
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800">{{ project.title }}</h3>
+                        <p class="text-gray-600 mt-2">{{ project.description }}</p>
+                        
+                        <!-- Project Link -->
+                        {% if project.link %}
+                            <a href="{{ project.link }}" target="_blank"
+                               class="mt-4 inline-block text-blue-500 hover:text-blue-700 font-medium transition">
+                                View Project →
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% empty %}
+                <p class="text-center text-gray-500 col-span-3">No projects available.</p>
+            {% endfor %}
+        </div>
+    </section>
+{% endblock %}

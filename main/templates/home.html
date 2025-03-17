@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home - My Portfolio{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    <section class="h-screen flex flex-col justify-center items-center text-center px-6">
+        <!-- Profile Image -->
+        <img src="{% static 'images/profile.jpg' %}" alt="Your Name" 
+             class="w-80 h-80 rounded-full border-0 border-white shadow-lg mb-4">
+        
+        <h1 class="text-5xl font-extrabold text-gray-800 leading-tight">
+            Hi, I'm <span class="text-blue-500">Mujtaba</span>
+        </h1>
+        <p class="mt-4 text-lg text-gray-600 max-w-lg">
+            A passionate Django Developer crafting elegant and efficient web applications.
+        </p>
+        <a href="/projects/" class="mt-6 inline-block bg-blue-500 text-white px-6 py-3 rounded-lg text-lg font-medium hover:bg-blue-600 transition">
+            View My Work
+        </a>
+    </section>
+
+    <!-- Projects Section -->
+    <section class="container mx-auto mt-16 px-6">
+        <h2 class="text-3xl font-bold text-gray-800 text-center">Featured Projects</h2>
+        <div class="mt-8 grid md:grid-cols-3 gap-6">
+            {% for project in featured_projects %}
+                <div class="bg-white shadow- rounded-lg overflow-hidden p-6 transition-transform transform hover:scale-105 duration-300">
+                    <!-- Project Image -->
+                    {% if project.image %}
+                        <img src="{{ project.image.url }}" alt="{{ project.title }}" class="w-full h-40 object-cover rounded-md">
+                    {% else %}
+                        <img src="{% static 'images/default_project.jpg' %}" alt="Default Image" class="w-full h-40 object-cover rounded-md">
+                    {% endif %}
+
+                    <!-- Project Details -->
+                    <h3 class="text-xl font-semibold mt-4">{{ project.title }}</h3>
+                    <p class="text-gray-600 mt-2">{{ project.description|truncatewords:15 }}</p>
+                    
+                    <!-- Project Link -->
+                    <a href="{% if project.link %}{{ project.link }}{% else %}#{% endif %}" 
+                       class="mt-4 inline-block text-blue-500 hover:underline">
+                        View Details →
+                    </a>
+                </div>
+            {% empty %}
+                <p class="text-center text-gray-500 col-span-3">No projects available.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section class="container mx-auto mt-16 px-6 text-center">
+        <h2 class="text-3xl font-bold text-gray-800">Skills & Technologies</h2>
+        <div class="mt-8 flex flex-wrap justify-center gap-6">
+            <span class="px-4 py-2 bg-gray-200 rounded-full text-lg font-medium">Python</span>
+            <span class="px-4 py-2 bg-gray-200 rounded-full text-lg font-medium">Django</span>
+            <span class="px-4 py-2 bg-gray-200 rounded-full text-lg font-medium">JavaScript</span>
+            <span class="px-4 py-2 bg-gray-200 rounded-full text-lg font-medium">Tailwind CSS</span>
+            <span class="px-4 py-2 bg-gray-200 rounded-full text-lg font-medium">PostgreSQL</span>
+        </div>
+    </section>
+
+    <!-- Contact CTA -->
+    <section class="container mx-auto mt-16 px-6 text-center">
+        <h2 class="text-3xl font-bold text-gray-800">Let's Work Together!</h2>
+        <p class="mt-4 text-lg text-gray-600">Got a project in mind? Feel free to reach out.</p>
+        <a href="/contact/" class="mt-6 inline-block bg-blue-500 text-white px-6 py-3 rounded-lg text-lg font-medium hover:bg-blue-600 transition">
+            Contact Me
+        </a>
+    </section>
+{% endblock %}
